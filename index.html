@@ -13,11 +13,24 @@
   <header>
     <strong>LOLDLE</strong>
   </header>
-    <main>
-      <input type="text" name="champion" id="champion">
-    </main>
-   <footer>
-    <p>Não sabe jogar? <span class="link">Clique aqui</span></p>
-   </footer> 
+  <main>
+    <input type="text" name="champion" id="champion" autocomplete="false">
+  </main>
+  <footer>
+    <p>Não sabe jogar? 
+      <span class="link" id="open-modal">Clique aqui</span>
+    </p>
+  </footer> 
+
+  <dialog>
+    <div class="dialog-content">
+      <strong>Como jogar?</strong>
+      <button id="close-button">x</button>
+      <p>Para jogar, basta digitar o nome do campeão que deseja jogar e clicar em "Buscar".</p>
+      <p>Após isso, você verá as informações do campeão que deseja jogar.</p>
+    </div>  
+  </dialog>
+
+  <script src="./script.js"></script>
 </body>
 </html>

@@ -27,11 +27,11 @@ header strong {
 }
 
 main {
-  flex: 1;
+  flex: 1; /* ocupa todo o espaço possível */
   display: flex;
   align-items: center;
   justify-content: space-around; 
-  gap: 32px;
+  gap: 32px; /* espaço entre os elementos do flex */
 }
 
 input {
@@ -52,6 +52,53 @@ footer p {
 
 .link {
   color: #0284c7;
-  text-decoration: underline;
   cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+dialog {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #3f3f46;
+  padding: 25px;
+  border-radius: 8px;
+  background-color: #262626;
+  color:  #f4f4f5;
+}
+
+::backdrop {
+  background-color: black;
+  opacity: 0.75;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#close-button {
+  all: unset;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 150ms;
+  user-select: none;
+}
+
+#close-button:hover {
+  background-color: #3f3f46;
 }
