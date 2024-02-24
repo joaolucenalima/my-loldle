@@ -1,11 +1,12 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #27272a;
@@ -21,9 +22,11 @@ header {
 }
 
 header strong {
+  font-family: "Signika Negative", sans-serif;
   font-size: 4rem;
-  font-weight: 500;
-  letter-spacing: -3px;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  color: #AB8746;
 }
 
 main {
@@ -34,16 +37,71 @@ main {
   gap: 32px; /* espaço entre os elementos do flex */
 }
 
-input {
+.custom-input {
   width: 80%;
-  padding: 10px;
-  font-size: 25px;
-  border: none;
-  border-radius: 8px;
+}
+
+.guess-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 20px;
+  background-color: #505050;
+  border: 1px solid #858586;
+  border-radius: 6px;
+  color: white; 
+}
+
+.guess-input:focus {
+  outline: 2px solid #AB8746;
+}
+
+.champion-list {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #505050;
+  border: 1px solid #858586;
+  border-radius: 4px;
+  display: none;
+}
+
+.custom-input input:focus + .champion-list,
+.custom-input .option:has(input:focus) {
+  display: block;
+}
+
+.option {
+  padding: 20px;
+  cursor: pointer;
+  position: relative;
+  list-style: none;
+}
+
+.option:not(:last-child) {
+  border-bottom: 1px solid #4d4d50;
+}
+
+.option input[type="radio"] {
+  outline: none;
+  all: unset;
+
+  position: absolute;
+  inset: 0;
+}
+
+.option:has(input[type="radio"]:focus) {
+  outline: 2px solid #AB8746;
+  z-index: 1;
+}
+
+.option:has(input[type="radio"]:checked),
+.option:hover {
+  background-color: #646464;
 }
 
 footer {
-  padding: 10px;
+  padding: 20px;
 }
 
 footer p {
@@ -51,7 +109,7 @@ footer p {
 }
 
 .link {
-  color: #0284c7;
+  color: #22a7cf;
   cursor: pointer;
 }
 
@@ -68,7 +126,7 @@ dialog {
   padding: 25px;
   border-radius: 8px;
   background-color: #262626;
-  color:  #f4f4f5;
+  color: #f4f4f5;
 }
 
 ::backdrop {
@@ -83,7 +141,7 @@ dialog {
 }
 
 #close-button {
-  all: unset;
+  all: unset; /* tira todos os estilos do elemento */
   position: absolute;
   top: 10px;
   right: 10px;

@@ -7,17 +7,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap" rel="stylesheet">
   <title>LOLDLE</title>
 </head>
 <body>
   <header>
     <strong>LOLDLE</strong>
   </header>
+
   <main>
-    <input type="text" name="champion" id="champion" autocomplete="false">
+    <div class="custom-input">
+      <input 
+        type="text"
+        name="guess-input"
+        id="guess-input"
+        class="guess-input"
+        placeholder="Digite o nome do campeão"
+        autocomplete="false"
+      />
+
+      <ul class="champion-list">
+        <li class="option">
+          <input type="radio" name="teste" id="teste" checked>
+          <p>teemo</p>
+        </li>
+        <li class="option">
+          <input type="radio" name="teste" id="teste">
+          <p>irelia</p>
+        </li>
+      </ul>
+    </div>
   </main>
+
   <footer>
-    <p>Não sabe jogar? 
+    <p>Não sabe jogar?
       <span class="link" id="open-modal">Clique aqui</span>
     </p>
   </footer> 
@@ -25,7 +48,7 @@
   <dialog>
     <div class="dialog-content">
       <strong>Como jogar?</strong>
-      <button id="close-button">x</button>
+      <button id="close-button">&times;</button> <!-- x &times; bonitinho -->
       <p>Para jogar, basta digitar o nome do campeão que deseja jogar e clicar em "Buscar".</p>
       <p>Após isso, você verá as informações do campeão que deseja jogar.</p>
     </div>  
