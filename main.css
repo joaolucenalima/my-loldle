@@ -64,6 +64,9 @@ main {
   border: 1px solid #858586;
   border-radius: 4px;
   display: none;
+
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .custom-input input:focus + .champion-list,
@@ -72,14 +75,22 @@ main {
 }
 
 .option {
-  padding: 20px;
+  padding: 10px;
   cursor: pointer;
   position: relative;
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.option p {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .option:not(:last-child) {
-  border-bottom: 1px solid #4d4d50;
+  border-bottom: 1px solid #666464;
 }
 
 .option input[type="radio"] {
