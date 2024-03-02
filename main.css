@@ -171,3 +171,7 @@ dialog {
 #close-button:hover {
   background-color: #3f3f46;
 }
+
+li:has(input:disabled){
+  display: none;
+}
