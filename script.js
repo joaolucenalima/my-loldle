@@ -16,27 +16,29 @@ const list = document.querySelector(".champion-list")
 const champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
   .then(response => response.json())
   .then(objetctResponse => Object.keys(objetctResponse.data))
-  .then(champList => {
-    champList.forEach((champion) => {
-      const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${champion}.png`
 
-      const liElement = document.createElement("li")
-      liElement.className = "option"
-      liElement.innerHTML = `
-        <input type="radio" name="${champion}" id="${champion}" disabled>
-        <img src="${imgUrl}" width="48px" height="48px"/>
-        <p>${champion}</p>`
+champions.forEach((champion) => {
+  const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${champion}.png`
 
-      list.appendChild(liElement)
-    })
+  const liElement = document.createElement("li")
+  liElement.className = "option"
+  liElement.innerHTML = `
+    <input type="radio" name="${champion}" id="${champion}" disabled>
+    <img src="${imgUrl}" width="48px" height="48px"/>
+    <p>${champion}</p>`
 
-    return champList
-  })
+  list.appendChild(liElement)
+})
 
-console.log(champions)
+function clearList() {
+  document.querySelectorAll("li>input:not(:disabled)").forEach(input => input.disabled = true)
+}
 
 input.addEventListener('input', (event) => {
-  if (event.target.value == "") return
+  if (event.target.value == "") {
+    clearList()
+    return
+  }
 
   champions.forEach((champion) => {
     const matches = champion.toLowerCase().includes(event.target.value.toLowerCase())
