@@ -17,13 +17,13 @@ const champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/da
   .then(response => response.json())
   .then(objectResponse => Object.values(objectResponse.data))
 
-champions.forEach(({ name, id, title }, index) => {
+champions.forEach(({ name, id, title }) => {
   const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${id}.png`
 
   const liElement = document.createElement("li")
   liElement.className = "option"
   liElement.innerHTML = `
-    <input type="radio" data-name="${name}" name="${name}" disabled ${index == 0 && "defaultChecked"}>
+    <input type="radio" data-name="${name}" name="champion" id="${id}" disabled >
     <img src="${imgUrl}" width="48px" height="48px"/>
     <div>
       <p>${name},</p>
