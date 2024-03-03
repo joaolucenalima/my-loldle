@@ -10,22 +10,25 @@ closeModalButton.addEventListener('click', () => {
   modal.close()
 })
 
-const input = document.querySelector(".guess-input")
+const input = document.querySelector("#guess-input")
 const list = document.querySelector(".champion-list")
 
 const champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
   .then(response => response.json())
-  .then(objetctResponse => Object.keys(objetctResponse.data))
+  .then(objectResponse => Object.values(objectResponse.data))
 
-champions.forEach((champion) => {
-  const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${champion}.png`
+champions.forEach(({ name, id, title }, index) => {
+  const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${id}.png`
 
   const liElement = document.createElement("li")
   liElement.className = "option"
   liElement.innerHTML = `
-    <input type="radio" name="${champion}" id="${champion}" disabled>
+    <input type="radio" data-name="${name}" name="${name}" disabled ${index == 0 && "defaultChecked"}>
     <img src="${imgUrl}" width="48px" height="48px"/>
-    <p>${champion}</p>`
+    <div>
+      <p>${name},</p>
+      <p class="title">${title.replace(/^([a-z])/, (val) => val.toUpperCase())}</p>
+    </div>`
 
   list.appendChild(liElement)
 })
@@ -36,12 +39,11 @@ function clearList() {
 
 input.addEventListener('input', (event) => {
   if (event.target.value == "") {
-    clearList()
-    return
+    return clearList()
   }
 
-  champions.forEach((champion) => {
-    const matches = champion.toLowerCase().includes(event.target.value.toLowerCase())
-    document.querySelector(`#${champion}`).disabled = !matches
+  champions.forEach(({ name }) => {
+    const matches = name.toLowerCase().includes(event.target.value.toLowerCase())
+    document.querySelector(`[data-name="${name}"]`).disabled = !matches
   })
 })
