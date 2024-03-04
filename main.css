@@ -9,6 +9,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: #27272a;
   color: #e4e4e7;
 }
@@ -26,10 +27,9 @@ header strong {
 }
 
 main {
-  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-around; 
+  justify-content: space-around;
   gap: 32px;
   padding: 32px;
 }
@@ -44,13 +44,13 @@ main {
   padding: 15px;
   font-size: 20px;
   background-color: #505050;
-  border: 1px solid #858586;
+  border: 2px solid #858586;
   border-radius: 6px;
-  color: white; 
+  color: white;
 }
 
 #guess-input:focus {
-  outline: 2px solid #AB8746;
+  outline: none
 }
 
 .champion-list {
@@ -67,13 +67,14 @@ main {
   border-radius: 4px;
 
   overflow-y: auto;
+  transition: 100ms;
 }
 
-li:has(input:focus){
+li:has(input:focus) {
   display: flex;
 }
 
-.champion-list:not(:has(li>input:not(:disabled))){
+.champion-list:not(:has(li>input:not(:disabled))) {
   display: none;
 }
 
@@ -105,7 +106,7 @@ li:has(input:focus){
   border-bottom: 1px solid #838383;
 }
 
-.option:has(input:disabled){
+.option:has(input:disabled) {
   display: none;
 }
 
@@ -168,7 +169,8 @@ dialog {
 }
 
 #close-button {
-  all: unset; /* tira todos os estilos do elemento */
+  all: unset;
+  /* tira todos os estilos do elemento */
   position: absolute;
   top: 10px;
   right: 10px;

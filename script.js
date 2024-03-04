@@ -10,7 +10,17 @@ closeModalButton.addEventListener('click', () => {
   modal.close()
 })
 
-const input = document.querySelector("#guess-input")
+const form = document.querySelector(".custom-input")
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault()
+  const champion = document.querySelector("input[type=radio]:checked")
+  if (champion) {
+    alert(`Você escolheu o campeão ${champion.dataset.name}`)
+  }
+})
+
+const input = document.getElementById("guess-input")
 const list = document.querySelector(".champion-list")
 
 const champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
@@ -26,9 +36,23 @@ champions.forEach(({ name, id, title }) => {
     <input type="radio" data-name="${name}" name="champion" id="${id}" disabled >
     <img src="${imgUrl}" width="48px" height="48px"/>
     <div>
-      <p>${name},</p>
+      <p>${name}</p>
       <p class="title">${title.replace(/^([a-z])/, (val) => val.toUpperCase())}</p>
     </div>`
+  liElement.addEventListener('keypress', (event) => {
+    if (event.key === "Enter") {
+      form.dispatchEvent(new Event('submit'))
+    }
+    if (event.key >= "a" && event.key <= "z") {
+      input.focus()
+    }
+  })
+
+  liElement.addEventListener('click', (event) => {
+    if (event.pointerType === "mouse") {
+      form.dispatchEvent(new Event('submit'))
+    }
+  })
 
   list.appendChild(liElement)
 })
@@ -37,13 +61,29 @@ function clearList() {
   document.querySelectorAll("li>input:not(:disabled)").forEach(input => input.disabled = true)
 }
 
+let firstMatch = null
+
 input.addEventListener('input', (event) => {
   if (event.target.value == "") {
     return clearList()
   }
 
   champions.forEach(({ name }) => {
-    const matches = name.toLowerCase().includes(event.target.value.toLowerCase())
+    const matches = name.toLowerCase().startsWith(event.target.value.toLowerCase())
     document.querySelector(`[data-name="${name}"]`).disabled = !matches
+    if (matches && !firstMatch) {
+      firstMatch = name
+    }
   })
+
+  if (firstMatch) {
+    document.querySelector(`[data-name="${firstMatch}"]`).checked = true
+  }
+})
+
+input.addEventListener('keydown', (event) => {
+  if (event.key === "ArrowDown") {
+    event.preventDefault()
+    document.querySelector(`[data-name="${firstMatch}"]`).focus()
+  }
 })

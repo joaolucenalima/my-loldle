@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="./main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400,500,600,700,800&display=swap" rel="stylesheet">
@@ -11,30 +12,26 @@
   <title>LOLDLE</title>
   <script src="./script.js" type="module"></script>
 </head>
+
 <body>
   <header>
     <strong>LOLDLE</strong>
   </header>
 
   <main>
-    <div class="custom-input">
-      <input 
-        name="guess-input"
-        id="guess-input"
-        placeholder="Digite o nome do campeão"
-        autocomplete="off"
-      />
+    <form class="custom-input">
+      <input name="guess-input" id="guess-input" placeholder="Digite o nome do campeão" autocomplete="off" autofocus />
 
       <ul class="champion-list">
       </ul>
-    </div>
+    </form>
   </main>
 
   <footer>
     <p>Não sabe jogar?
-      <span class="link" id="open-modal">Clique aqui</span>
+      <span class="link" id="open-modal" tabindex="0">Clique aqui</span>
     </p>
-  </footer> 
+  </footer>
 
   <dialog>
     <div class="dialog-content">
@@ -42,7 +39,8 @@
       <button id="close-button">&times;</button>
       <p>Para jogar, basta digitar o nome do campeão que deseja jogar e clicar em "Buscar".</p>
       <p>Após isso, você verá as informações do campeão que deseja jogar.</p>
-    </div>  
+    </div>
   </dialog>
 </body>
+
 </html>
