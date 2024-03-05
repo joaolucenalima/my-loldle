@@ -39,11 +39,11 @@ champions.forEach(({ name, id, title }) => {
       <p>${name}</p>
       <p class="title">${title.replace(/^([a-z])/, (val) => val.toUpperCase())}</p>
     </div>`
-  liElement.addEventListener('keypress', (event) => {
+  liElement.addEventListener('keydown', (event) => {
     if (event.key === "Enter") {
       form.dispatchEvent(new Event('submit'))
     }
-    if (event.key >= "a" && event.key <= "z") {
+    if (event.key >= "a" && event.key <= "z" || event.key == "Backspace" || event.key == "Space") {
       input.focus()
     }
   })
@@ -61,12 +61,14 @@ function clearList() {
   document.querySelectorAll("li>input:not(:disabled)").forEach(input => input.disabled = true)
 }
 
-let firstMatch = null
+let firstMatch
 
 input.addEventListener('input', (event) => {
   if (event.target.value == "") {
     return clearList()
   }
+
+  firstMatch = null
 
   champions.forEach(({ name }) => {
     const matches = name.toLowerCase().startsWith(event.target.value.toLowerCase())
@@ -83,7 +85,7 @@ input.addEventListener('input', (event) => {
 
 input.addEventListener('keydown', (event) => {
   if (event.key === "ArrowDown") {
-    event.preventDefault()
+    event.preventDefault();
     document.querySelector(`[data-name="${firstMatch}"]`).focus()
   }
-})
+});
