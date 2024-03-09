@@ -11,11 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap" rel="stylesheet">
   <title>LOLDLE</title>
   <script src="./script.js" type="module"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
   <header>
-    <strong>LOLDLE</strong>
+    <h1>LOLDLE</h1>
+    <span id="open-modal" title="Saber mais">
+      <i data-lucide="circle-help"></i>
+    </span>
   </header>
 
   <main>
@@ -26,12 +30,6 @@
       </ul>
     </form>
   </main>
-
-  <footer>
-    <p>Não sabe jogar?
-      <span class="link" id="open-modal" tabindex="0">Clique aqui</span>
-    </p>
-  </footer>
 
   <dialog>
     <div class="dialog-content">

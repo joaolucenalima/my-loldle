@@ -9,21 +9,35 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #27272a;
   color: #e4e4e7;
 }
 
 header {
   padding: 5px 10px;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-header strong {
+header h1 {
   font-family: "Signika Negative", sans-serif;
   font-size: 4rem;
   font-weight: 400;
   font-optical-sizing: auto;
   color: #AB8746;
+}
+
+header span {
+  color: rgb(182, 182, 182);
+  cursor: pointer;
+  transition: 150ms;
+}
+
+header span:hover {
+  color: #858586;
 }
 
 main {

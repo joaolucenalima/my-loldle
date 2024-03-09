@@ -1,3 +1,5 @@
+lucide.createIcons()
+
 const modal = document.getElementsByTagName('dialog')[0]
 const openModalButton = document.getElementById('open-modal')
 const closeModalButton = document.getElementById('close-button')
