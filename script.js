@@ -12,20 +12,14 @@ closeModalButton.addEventListener('click', () => {
   modal.close()
 })
 
+const main = document.querySelector("main")
 const form = document.querySelector(".custom-input")
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault()
-  const champion = document.querySelector("input[type=radio]:checked")
-  if (champion) {
-    alert(`Você escolheu o campeão ${champion.dataset.name}`)
-  }
-})
-
 const input = document.getElementById("guess-input")
 const list = document.querySelector(".champion-list")
 
-const champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
+let guessesElement = document.querySelector(".guesses")
+
+let champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
   .then(response => response.json())
   .then(objectResponse => Object.values(objectResponse.data))
 
@@ -62,6 +56,30 @@ champions.forEach(({ name, id, title }) => {
 function clearList() {
   document.querySelectorAll("li>input:not(:disabled)").forEach(input => input.disabled = true)
 }
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault()
+  const champion = document.querySelector("input[type=radio]:checked")
+  if (champion) {
+    const guessElement = document.createElement("div")
+    guessElement.className = "guess"
+    guessElement.innerHTML = `<p>${champion.dataset.name}</p>`
+
+    input.value = ""
+    champions = champions.filter(({ name }) => name !== champion.dataset.name)
+    clearList()
+
+    if (guessesElement) {
+      guessesElement.appendChild(guessElement)
+      return
+    }
+
+    guessesElement = document.createElement("div")
+    guessesElement.className = "guesses"
+    main.appendChild(guessesElement)
+    guessesElement.appendChild(guessElement)
+  }
+})
 
 let firstMatch
 
