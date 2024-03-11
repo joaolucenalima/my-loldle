@@ -33,7 +33,7 @@ champions.forEach(({ name, id, title }) => {
     <img src="${imgUrl}" width="48px" height="48px"/>
     <div>
       <p>${name}</p>
-      <p class="title">${title.replace(/^([a-z])/, (val) => val.toUpperCase())}</p>
+      <p class="title">${title.replace(/^[a-z]/, (val) => val.toUpperCase())}</p>
     </div>`
   liElement.addEventListener('keydown', (event) => {
     if (event.key === "Enter") {
@@ -56,30 +56,6 @@ champions.forEach(({ name, id, title }) => {
 function clearList() {
   document.querySelectorAll("li>input:not(:disabled)").forEach(input => input.disabled = true)
 }
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault()
-  const champion = document.querySelector("input[type=radio]:checked")
-  if (champion) {
-    const guessElement = document.createElement("div")
-    guessElement.className = "guess"
-    guessElement.innerHTML = `<p>${champion.dataset.name}</p>`
-
-    input.value = ""
-    champions = champions.filter(({ name }) => name !== champion.dataset.name)
-    clearList()
-
-    if (guessesElement) {
-      guessesElement.appendChild(guessElement)
-      return
-    }
-
-    guessesElement = document.createElement("div")
-    guessesElement.className = "guesses"
-    main.appendChild(guessesElement)
-    guessesElement.appendChild(guessElement)
-  }
-})
 
 let firstMatch
 
@@ -109,3 +85,27 @@ input.addEventListener('keydown', (event) => {
     document.querySelector(`[data-name="${firstMatch}"]`).focus()
   }
 });
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault()
+  const champion = document.querySelector("input[type=radio]:checked")
+  if (champion && firstMatch) {
+    const guessElement = document.createElement("div")
+    guessElement.className = "guess"
+    guessElement.innerHTML = `<p>${champion.dataset.name}</p>`
+
+    input.value = ""
+    champions = champions.filter(({ name }) => name !== champion.dataset.name)
+    clearList()
+
+    if (guessesElement) {
+      guessesElement.appendChild(guessElement)
+      return
+    }
+
+    guessesElement = document.createElement("div")
+    guessesElement.className = "guesses"
+    main.appendChild(guessesElement)
+    guessesElement.appendChild(guessElement)
+  }
+})
