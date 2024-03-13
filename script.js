@@ -17,11 +17,10 @@ const form = document.querySelector(".custom-input")
 const input = document.getElementById("guess-input")
 const list = document.querySelector(".champion-list")
 
-let guessesElement = document.querySelector(".guesses")
-
-let champions = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
+let champions_object = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4.1/data/pt_BR/champion.json')
   .then(response => response.json())
-  .then(objectResponse => Object.values(objectResponse.data))
+
+let champions = Object.values(champions_object.data)
 
 champions.forEach(({ name, id, title }) => {
   const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${id}.png`
@@ -86,26 +85,32 @@ input.addEventListener('keydown', (event) => {
   }
 });
 
+let guessesElement = document.querySelector(".guesses")
+
 form.addEventListener("submit", (event) => {
   event.preventDefault()
   const champion = document.querySelector("input[type=radio]:checked")
   if (champion && firstMatch) {
-    const guessElement = document.createElement("div")
-    guessElement.className = "guess"
-    guessElement.innerHTML = `<p>${champion.dataset.name}</p>`
+    const champion_tried = champions_object.data[champion.dataset.name]
+    const imgUrl = 'https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/'
+
+    const guessMade = `
+        <img src="${imgUrl + champion_tried.id + '.png'}" width="54px" height="54px"/>
+        <p>${champion.dataset.name}</p>
+        <p>${["Mana", "Energia"].includes(champion_tried.partype) ? champion_tried.partype : 'Nenhum'}</p>
+        <p>${champion_tried.tags.join(", ")}</p>
+        <p>${champion_tried.stats.attackrange >= 350 ? 'Ranged' : 'Melee'}</p>`
 
     input.value = ""
     champions = champions.filter(({ name }) => name !== champion.dataset.name)
     clearList()
 
-    if (guessesElement) {
-      guessesElement.appendChild(guessElement)
-      return
+    if (!guessesElement) {
+      guessesElement = document.createElement("div")
+      guessesElement.className = "guesses"
+      main.appendChild(guessesElement)
     }
 
-    guessesElement = document.createElement("div")
-    guessesElement.className = "guesses"
-    main.appendChild(guessesElement)
-    guessesElement.appendChild(guessElement)
+    guessesElement.innerHTML += guessMade;
   }
 })
