@@ -36,7 +36,7 @@ champions.forEach(({ name, id, title }) => {
     </div>`
   liElement.addEventListener('keydown', (event) => {
     if (event.key === "Enter") {
-      form.dispatchEvent(new Event('submit'))
+      form.requestSubmit()
     }
     if (event.key >= "a" && event.key <= "z" || event.key == "Backspace" || event.key == "Space") {
       input.focus()
@@ -45,7 +45,7 @@ champions.forEach(({ name, id, title }) => {
 
   liElement.addEventListener('click', (event) => {
     if (event.pointerType === "mouse") {
-      form.dispatchEvent(new Event('submit'))
+      form.requestSubmit()
     }
   })
 
@@ -91,15 +91,17 @@ form.addEventListener("submit", (event) => {
   event.preventDefault()
   const champion = document.querySelector("input[type=radio]:checked")
   if (champion && firstMatch) {
-    const champion_tried = champions_object.data[champion.dataset.name]
+    const champion_tried = champions_object.data[champion.id]
     const imgUrl = 'https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/'
 
-    const guessMade = `
-        <img src="${imgUrl + champion_tried.id + '.png'}" width="54px" height="54px"/>
-        <p>${champion.dataset.name}</p>
-        <p>${["Mana", "Energia"].includes(champion_tried.partype) ? champion_tried.partype : 'Nenhum'}</p>
-        <p>${champion_tried.tags.join(", ")}</p>
-        <p>${champion_tried.stats.attackrange >= 350 ? 'Ranged' : 'Melee'}</p>`
+    const answerElement = document.createElement("div")
+    answerElement.className = "answer"
+    answerElement.innerHTML = `
+        <img src="${imgUrl + champion_tried.id + '.png'}" class="square"/>
+        <p class="square">${champion.dataset.name}</p>
+        <p class="square">${["Mana", "Energia"].includes(champion_tried.partype) ? champion_tried.partype : 'Nenhum'}</p>
+        <p class="square">${champion_tried.tags.join(", ")}</p>
+        <p class="square">${champion_tried.stats.attackrange >= 350 ? 'Ranged' : 'Melee'}</p>`
 
     input.value = ""
     champions = champions.filter(({ name }) => name !== champion.dataset.name)
@@ -111,6 +113,6 @@ form.addEventListener("submit", (event) => {
       main.appendChild(guessesElement)
     }
 
-    guessesElement.innerHTML += guessMade;
+    guessesElement.insertAdjacentElement('afterbegin', answerElement);
   }
 })
