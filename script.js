@@ -44,7 +44,7 @@ champions.forEach(({ name, id, title }) => {
   })
 
   liElement.addEventListener('click', (event) => {
-    if (event.pointerType === "mouse") {
+    if (event.pointerType === "mouse" || event.detail === 1) {
       form.requestSubmit()
     }
   })
