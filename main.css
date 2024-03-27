@@ -231,6 +231,17 @@ dialog {
   text-align: center;
   width: calc(20% - 0.5rem);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+  color: white;
+}
+
+.correct {
+  background-color: #4caf50;
+  border: 2px solid #267229;
+}
+
+.wrong {
+  background-color: #f44336;
+  border: 2px solid #a52714;
 }
 
 @keyframes emerge {

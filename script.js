@@ -22,6 +22,10 @@ let champions_object = await fetch('https://ddragon.leagueoflegends.com/cdn/14.4
 
 let champions = Object.values(champions_object.data)
 
+const sortedChampion = champions[Math.floor(Math.random() * champions.length)]
+
+console.log(sortedChampion)
+
 champions.forEach(({ name, id, title }) => {
   const imgUrl = `https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/${id}.png`
 
@@ -87,21 +91,43 @@ input.addEventListener('keydown', (event) => {
 
 let guessesElement = document.querySelector(".guesses")
 
+function generateChampionAnswerData(champion) {
+  const partype = ["Mana", "Energia", "Fúria"].includes(champion.partype) ? champion.partype : 'Nenhum'
+  const rangeType = champion.stats.attackrange >= 350 ? 'Ranged' : 'Melee'
+  const tags = champion.tags.join(", ")
+  return {
+    partype,
+    tags,
+    rangeType
+  }
+}
+
 form.addEventListener("submit", (event) => {
   event.preventDefault()
   const champion = document.querySelector("input[type=radio]:checked")
   if (champion && firstMatch) {
-    const champion_tried = champions_object.data[champion.id]
+    firstMatch = null
+    const champion_tried_obj = champions_object.data[champion.id]
     const imgUrl = 'https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/'
 
+    const champion_tried = generateChampionAnswerData(champion_tried_obj)
+    const correct_champion = generateChampionAnswerData(sortedChampion)
+
     const answerElement = document.createElement("div")
+
     answerElement.className = "answer"
     answerElement.innerHTML = `
-        <img src="${imgUrl + champion_tried.id + '.png'}" class="square"/>
+        <img src="${imgUrl + champion_tried_obj.id + '.png'}" class="square"/>
         <p class="square">${champion.dataset.name}</p>
-        <p class="square">${["Mana", "Energia"].includes(champion_tried.partype) ? champion_tried.partype : 'Nenhum'}</p>
-        <p class="square">${champion_tried.tags.join(", ")}</p>
-        <p class="square">${champion_tried.stats.attackrange >= 350 ? 'Ranged' : 'Melee'}</p>`
+        <p class="square ${correct_champion.partype == champion_tried.partype ? "correct" : "wrong"}">
+          ${champion_tried.partype}
+        </p>
+        <p class="square">
+          ${champion_tried.tags}
+        </p>
+        <p class="square ${correct_champion.rangeType == champion_tried.rangeType ? "correct" : "wrong"}">
+          ${champion_tried.rangeType}
+        </p>`
 
     input.value = ""
     champions = champions.filter(({ name }) => name !== champion.dataset.name)
